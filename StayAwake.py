@@ -25,15 +25,19 @@ def cur_time():
     return strftime("%Y-%m-%d %H:%M:%S", localtime())
 
 print(f"{cur_time()}:Starting...")
+inactive = 0
 while(True):
     idle_time= get_idle_duration()
-    if(idle_time>300):
-        if(idle_time>3600):
-            print("You been inactive for 1hr. Good Bye!")
+    if(idle_time<1): inactive = 0
+    elif(idle_time>300):
+        if(inactive>3600):
+            print(f"You been inactive for {(inactive/60)/60}hr. Good Bye!")
             break
         else:
+            inactive+=idle_time
             press("shift")
-            print(f"{cur_time()}:Shift pressed")
+            print(f"{cur_time()}:Shift pressed. Inactive for {inactive}")
+            sleep(1)
     else:
         print(f"{cur_time()}: idle time:{idle_time}") 
-        sleep(100)
+        sleep(150)
