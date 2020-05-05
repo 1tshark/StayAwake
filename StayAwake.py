@@ -40,4 +40,4 @@ while(True):
             sleep(2)    
     else:
         print(f"{cur_time()}: idle time:{idle_time}") 
-        sleep(150)
+        sleep(30)
