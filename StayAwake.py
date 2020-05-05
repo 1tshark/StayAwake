@@ -30,6 +30,9 @@ while(True):
     if(idle_time>300):
         press("shift")
         print(f"{cur_time()}:Shift pressed")
+    elif:(idle_time>3600)
+        print("You been inactive for 1hr. Good Bye!")
+        break
     else:
-        print(f"{cur_time()}:Idle_time {idle_time}. Sleeping for 100s") 
+        print(f"{cur_time()}: idle time:{idle_time}") 
         sleep(100)
