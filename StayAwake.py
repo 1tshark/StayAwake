@@ -31,11 +31,11 @@ while(True):
     idle_time = get_idle_duration()      
     if(idle_time<1): inactive = 0    
     if(idle_time>300):
+        inactive+=idle_time
         if(inactive>3600):
             print(f"You been inactive for {convert(inactive)}. Good Bye!")
             break
         else:
-            inactive+=idle_time
             press("shift")
             print(f"{cur_time()}:Shift pressed. Inactive for {convert(inactive)}")
             sleep(2)    
