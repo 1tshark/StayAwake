@@ -1,10 +1,14 @@
 __author__ = "Tshark Online"
 __license__ = "GPL"
-__version__ = "2.0.0"
+__version__ = "2.5.0"
 
-from pyautogui import press
+import pyautogui
 from time import localtime, strftime, sleep, gmtime
 from ctypes import Structure, windll, c_uint, sizeof, byref
+from os import system
+from random import randrange
+
+pyautogui.FAILSAFE = False
 
 class LASTINPUTINFO(Structure):
     _fields_ = [
@@ -26,19 +30,24 @@ def convert(seconds):
     return strftime("%H:%M:%S", gmtime(seconds)) 
 
 print(f"{cur_time()}:Starting...")
-inactive = 0
+inactive = 0  #keeps the inactive time everytime shift is pressed
+local_idle = 0  #used to calculate the exact time being inactive
 while(True):
-    idle_time = get_idle_duration()      
-    if(idle_time<1): inactive = 0    
-    if(idle_time>300):
-        inactive+=idle_time
+    sys_idle_time = get_idle_duration()      
+    if(sys_idle_time<1 and inactive!=0): 
+        print(f"You were inactive for {convert(inactive+local_idle)}. Stay active!")
+        inactive = 0    
+    if(sys_idle_time>840):
+        inactive+=sys_idle_time
         if(inactive>3600):
             print(f"You been inactive for {convert(inactive)}. Good Bye!")
             break
         else:
-            press("shift")
+            pyautogui.press("shift")
             print(f"{cur_time()}:Shift pressed. Inactive for {convert(inactive)}")
             sleep(2)    
     else:
-        print(f"{cur_time()}: idle time:{idle_time}") 
-        sleep(60)
+        local_idle = sys_idle_time
+        if(sys_idle_time>59):  print(f"{cur_time()}: idle time:{convert(sys_idle_time)}") 
+        sleep(randrange(30, 120))
+system('pause')
