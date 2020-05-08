@@ -1,6 +1,6 @@
 __author__ = "Tshark Online"
 __license__ = "GPL"
-__version__ = "2.5.0"
+__version__ = "2.6.0"
 
 import pyautogui
 from time import localtime, strftime, sleep, gmtime
@@ -34,18 +34,18 @@ inactive = 0  #keeps the inactive time everytime shift is pressed
 local_idle = 0  #used to calculate the exact time being inactive
 while(True):
     sys_idle_time = get_idle_duration()      
-    if(sys_idle_time<1 and inactive!=0): 
+    if(sys_idle_time<local_idle and inactive!=0): 
         print(f"You were inactive for {convert(inactive+local_idle)}. Stay active!")
         inactive = 0    
-    if(sys_idle_time>780):
+    if(sys_idle_time>720):
         inactive+=sys_idle_time
+        local_idle=0
         if(inactive>3600):
             print(f"You been inactive for {convert(inactive)}. Good Bye!")
             break
         else:
             pyautogui.press("ctrl")
-            print(f"{cur_time()}:ctrl pressed. Inactive for {convert(inactive)}")
-            sleep(2)    
+            print(f"{cur_time()}:ctrl pressed. Inactive for {convert(inactive)}")              
     else:
         local_idle = sys_idle_time
         if(sys_idle_time>59):  print(f"{cur_time()}: idle time:{convert(sys_idle_time)}") 
