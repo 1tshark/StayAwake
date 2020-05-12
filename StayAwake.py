@@ -1,6 +1,6 @@
 __author__ = "Tshark Online"
 __license__ = "GPL"
-__version__ = "2.6.0"
+__version__ = "2.6.5"
 
 import pyautogui
 from time import localtime, strftime, sleep, gmtime
@@ -35,13 +35,13 @@ local_idle = 0  #used to calculate the exact time being inactive
 while(True):
     sys_idle_time = get_idle_duration()      
     if(sys_idle_time<local_idle and inactive!=0): 
-        print(f"You were inactive for {convert(inactive+local_idle)}. Stay active!")
+        print(f"{cur_time()}: Inactive for {convert(inactive+local_idle)}. Stay active!")
         inactive = 0    
     if(sys_idle_time>720):
         inactive+=sys_idle_time
         local_idle=0
-        if(inactive>3600):
-            print(f"You been inactive for {convert(inactive)}. Good Bye!")
+        if(inactive>7200):
+            print(f"Inactive for {convert(inactive)}. Good Bye!")
             break
         else:
             pyautogui.press("ctrl")
